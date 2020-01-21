@@ -1,1 +1,41 @@
 Lab Sheet 5 announcements- CUP
+/////Declaration file/////
+import java_cup.runtime.Symbol; 
+import java_cup.runtime.Scanner; 
+%% 
+%cup
+%eofval{ 
+return new Symbol (sym.EOFILE); 
+%eofval}
+%% 
+[\n] {System.out.println("LA"+ "NL");return new Symbol(sym.NL);} 
+";"  {System.out.println("LA "+yytext());return new Symbol(sym.SEMI);} 
+","  {System.out.println("LA"+yytext());return new Symbol(sym.COMMA);} 
+" "  {System.out.println("LA "+yytext());return new Symbol(sym.SPACE);} 
+[0-9]+ {System.out.println("LA "+yytext());return new Symbol(sym.INT,new  Integer(yytext()));} 
+"int" {System.out.println("LA "+yytext());return new Symbol(sym.INT);} 
+"float" {System.out.println("LA "+yytext());return new Symbol(sym.FLOAT);}
+"char" {System.out.println("LA "+yytext());return new Symbol(sym.CHAR);}
+"string" {System.out.println("LA "+yytext());return new Symbol(sym.STRING);}
+[a-z][a-z0-9]* {System.out.println("LA "+yytext());
+
+return new Symbol(sym.ID,new String(yytext()));} 
+
+
+
+
+
+
+
+///////////////DEclaration.cup
+import java_cup.runtime.*; 
+	scan with {: return getScanner().next_token(); :};
+	terminal INT,FLOAT,STRING,SEMI,COMMA,ID, SPACE, EOFILE, NL, CHAR;
+	non terminal prog, stmt, decln, varlist, type, s;
+	s::=prog {: System.out.println("Valid declaration"); System.exit(0);:}	
+EOFILE{:System.exit(0);:} ;
+	prog::=prog stmt |stmt ;
+	stmt::=decln | decln NL;
+	decln::=type SPACE varlist SEMI;
+	type::=INT | STRING | FLOAT | CHAR;
+	varlist::=ID COMMA varlist | ID ;
