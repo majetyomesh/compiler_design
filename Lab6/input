@@ -1,0 +1,7 @@
+char ch,ch1;
+var int a,b;
+var int t1 = 2,t2;
+var string str = "heyy";
+var float hello = 23.4;
+if(x==y) int y2 = 4;
+else int z1 = 5;

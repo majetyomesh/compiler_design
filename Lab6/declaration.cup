@@ -1,0 +1,20 @@
+import java_cup.runtime.*;
+
+scan with {: return getScanner().next_token(); :};
+terminal INT,STRING,SEMI,COMMA,ID, SPACE, EOFILE, FLOAT,SWITCH, CHAR, NEWLINE, VAR, ASSIGN, IF, ELSE, COMPARATOR, LP, RP;
+non terminal prog, stmt, decln, varlist, type,econd, s, assign, nint, nstring, nfloat, nchar, condition, cond, expr;
+s::=prog {: System.out.println("Valid declaration"); System.exit(0); :} EOFILE ;
+prog::=prog stmt |  stmt  ;
+stmt::=decln | decln SPACE | decln NEWLINE | cond  ;
+decln::=type SPACE varlist SEMI;
+type::=nint | nstring | nfloat | nchar | VAR SPACE type ;
+nint::=INT ;
+nstring::=STRING ;
+nfloat::=FLOAT ;
+nchar::=CHAR ;
+varlist::=ID COMMA varlist | ID | assign | assign COMMA varlist ;
+assign::=ID SPACE ASSIGN SPACE type ;
+cond::=IF LP condition RP SPACE stmt | SWITCH LP condition RP;
+econd::= cond ELSE SPACE stmt; 
+condition::=ID COMPARATOR expr ;
+expr::=ID | type ;
